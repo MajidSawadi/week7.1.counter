@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import NavvBar from './Navvbar';
 import reportWebVitals from './reportWebVitals';
 import {createStore} from 'redux';
 import {Provider} from 'react-redux';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 
@@ -15,6 +17,13 @@ function countReducer(state = initialState, action) {
       return{
         ...state,
         defaultColor: action.payload
+      }
+      case "CHANGE_SPECIFIC_BOX":
+      const indexColors = state.indexColors
+      indexColors[action.payload.index] = action.payload.color
+      return {
+        ...state,
+        indexColors: indexColors
       }
     case "INCREMENT":
       return {
@@ -31,7 +40,7 @@ function countReducer(state = initialState, action) {
     }
 }
 const initialState = {
-  count: 1,
+  count: 3,
   indexColors: [null],
   defaultColor: "rgb(215, 71, 66)",
 };
@@ -41,6 +50,7 @@ const store = createStore(countReducer);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
+      <NavvBar/>
     <App />
     </Provider>
     
